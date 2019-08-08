@@ -8,14 +8,6 @@ import (
 	"net/http"
 )
 
-var (
-	signingResponseChan chan string
-)
-
-func init() {
-	signingResponseChan = make(chan string)
-}
-
 func main() {
 
 	r := mux.NewRouter()
@@ -27,8 +19,6 @@ func main() {
 	})
 
 	r.HandleFunc("/ping", pingHandler)
-	r.HandleFunc("/sign", signingHandler)
-	r.HandleFunc("/getsigned", signingResponseHandler)
 
 	// set up CORS
 	headersOk := handlers.AllowedHeaders([]string{"Origin", "Content-Type", "X-Auth-Token", "Authorization", "X-Requested-With"})
