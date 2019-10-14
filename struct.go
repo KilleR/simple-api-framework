@@ -1,4 +1,4 @@
-package main
+package simpleApiFramework
 
 import (
 	"encoding/json"

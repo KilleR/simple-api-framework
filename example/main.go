@@ -2,13 +2,14 @@ package main
 
 import (
 	"fmt"
+	simpleApiFramework "github.com/KilleR/simple-api-framework"
 	"log"
 	"net/http"
 )
 
 func main() {
 
-	r := NewSimpleApiFramework()
+	r := simpleApiFramework.NewSimpleApiFramework()
 
 	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		_, err := fmt.Fprintln(w, "Hello world")
