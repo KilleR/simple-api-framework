@@ -1,4 +1,4 @@
-module github.com/KileR/simple-api-framework
+module github.com/KilleR/simple-api-framework
 
 go 1.12
 
