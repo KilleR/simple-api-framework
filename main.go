@@ -2,15 +2,14 @@ package main
 
 import (
 	"fmt"
-	"github.com/gorilla/handlers"
-	"github.com/gorilla/mux"
 	"log"
 	"net/http"
 )
 
 func main() {
 
-	r := mux.NewRouter()
+	r := NewSimpleApiFramework()
+
 	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		_, err := fmt.Fprintln(w, "Hello world")
 		if err != nil {
@@ -20,10 +19,5 @@ func main() {
 
 	r.HandleFunc("/ping", pingHandler)
 
-	// set up CORS
-	headersOk := handlers.AllowedHeaders([]string{"Origin", "Content-Type", "X-Auth-Token", "Authorization", "X-Requested-With"})
-	originsOk := handlers.AllowedOrigins([]string{"*"})
-	methodsOk := handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "OPTIONS"})
-
-	log.Fatalln(http.ListenAndServe(":8000", handlers.CORS(originsOk, headersOk, methodsOk)(r)))
+	log.Fatalln(r.Start())
 }

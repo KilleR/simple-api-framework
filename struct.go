@@ -2,9 +2,31 @@ package main
 
 import (
 	"encoding/json"
+	"github.com/gorilla/handlers"
+	"github.com/gorilla/mux"
 	"log"
 	"net/http"
 )
+
+type SimpleApiFramework struct {
+	*mux.Router
+}
+
+func NewSimpleApiFramework() (framework SimpleApiFramework) {
+	framework.Router = mux.NewRouter()
+
+	return
+}
+
+func (framework SimpleApiFramework) Start() error {
+
+	// set up CORS
+	headersOk := handlers.AllowedHeaders([]string{"Origin", "Content-Type", "X-Auth-Token", "Authorization", "X-Requested-With"})
+	originsOk := handlers.AllowedOrigins([]string{"*"})
+	methodsOk := handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "OPTIONS"})
+
+	return http.ListenAndServe(":8000", handlers.CORS(originsOk, headersOk, methodsOk)(framework))
+}
 
 type ApiResponse struct {
 	w      http.ResponseWriter
